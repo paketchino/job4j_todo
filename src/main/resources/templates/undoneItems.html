@@ -21,44 +21,49 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" th:href="@{/allItems}">Все заявки на данный момент</a>
+        <a class="navbar-brand" th:href="@{/addItem}">Все заявки на данный момент</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/allItems}">Все заявки</a>
+                <a class="nav-item nav-link" th:href="@{/addItem}">Все заявки</a>
                 <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
             </div>
         </div>
     </nav>
+
     <div class="row">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Новая задача для выполнения.
-            </div>
-            <div class="card-body">
-                <form th:action="@{/createItem}" method="POST">
-                    <input type="hidden" name="id" value="0"/>
-                    <form>
-                        <div class="form-group">
-                            <label>Имя заявки
-                                <input type="text" class="form-control" name="name" id="name">
-                            </label>
-                            <label>Описание заявки
-                                <input type="text" class="form-control" name="description" id="description">
-                            </label>
-                            <div class="form-check">
-                                <input type="checkbox" name="done" class="form-check-input" id="done">
-                                <label class="form-check-label" for="done">Выполнена</label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                    </form>
-            </div>
-        </div>
+        <table class="table">
+            <thead>
+            <a th:href="@{|addItem|}">
+                <button type="submit" name="submit_button" value="main_button">
+                    Добавить задание</button>
+            </a>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Дата создания</th>
+                <th scope="col">Выполнено</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}" />
+                <td th:text="${item.description}" />
+                <td th:text="${#temporals.format(item.created, 'dd-MM-yyyy HH:mm:ss')}" />
+                <td>
+                    <span th:if="${!item.done}">
+                    <i class="fa fa-check-square-o"></i></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
 </div>
 </body>
 </html>

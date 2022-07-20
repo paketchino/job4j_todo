@@ -1,7 +1,11 @@
 package ru.job4j_todo.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -16,12 +20,14 @@ public class Item {
 
     private String description;
 
-    private Timestamp created;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
     private boolean done;
 
 
-    public static Item of(int id, String name, String description, Timestamp created, boolean done) {
+    public static Item of(int id, String name, String description, Date created, boolean done) {
         Item item = new Item();
         item.id = id;
         item.name = name;
@@ -47,19 +53,19 @@ public class Item {
         this.id = id;
     }
 
-    public String getDesc() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDesc(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
@@ -93,7 +99,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format("Item - id: = %s, name: = %s, description: = %s, created: = %s, boolean: = %s",
+        return String.format("Item - id: = %s, name: = %s, descItem: = %s, created: = %s, boolean: = %s",
                 id, name, description, created, done);
     }
 }

@@ -20,7 +20,19 @@ public class ItemService {
         return itemStore.findAll();
     }
 
-    public void add(Item item) {
-        itemStore.add(item);
+    public List<Item> findAllByConditionFalse() {
+        return itemStore.findAllByCondition(false);
+    }
+
+    public List<Item> findAllByConditionTrue() {
+        return itemStore.findAllByCondition(true);
+    }
+
+    public Item add(Item item) {
+        return itemStore.add(item);
+    }
+
+    public List<Item> findById(int id) {
+        return itemStore.findById(id);
     }
 }

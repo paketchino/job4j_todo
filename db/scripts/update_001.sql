@@ -1,7 +1,7 @@
 create table if not exists items(
     id SERIAL PRIMARY KEY,
-    name TEXT,
-    description TEXT,
+    name varchar,
+    descriptionItem VARCHAR,
     created TIMESTAMP,
-    done boolean
+    done BOOLEAN
 )

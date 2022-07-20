@@ -21,15 +21,15 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" th:href="@{/items}">Все заявки на данный момент</a>
+        <a class="navbar-brand" th:href="@{/addItem}">Все заявки на данный момент</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/items}">Все заявки</a>
-                <a class="nav-item nav-link" th:href="@{/complitlyItem}">Выполненные</a>
-                <a class="nav-item nav-link" th:href="@{/earlyAddItem}">Новый</a>
+                <a class="nav-item nav-link" th:href="@{/addItem}">Все заявки</a>
+                <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
+                <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
             </div>
         </div>
     </nav>
@@ -37,10 +37,13 @@
     <div class="row">
         <table class="table">
             <thead>
+            <a th:href="@{|addItem|}">
+                <button type="submit" name="submit_button" value="main_button">
+                    Добавить задание</button>
+            </a>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Имя</th>
-                <th scope="col">Описание</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Выполнено</th>
             </tr>
@@ -49,13 +52,11 @@
             <tr th:each="item: ${items}">
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.name}" />
-                <td th:text="${item.desc}" />
                 <td th:text="${#temporals.format(item.created, 'dd-MM-yyyy HH:mm:ss')}" />
                 <td>
-                    <span th:if="${item.done}">
-                    <i class="fa fa-check-square-o"></i></span>
-                    <span th:if="${!item.done}">
-                    <i class="fa fa-square-o"></i></span>
+                     <span th:if="${item.isDone}">
+                        <span class="badge badge-success">Выполнено</span>
+                    </span>
                 </td>
             </tr>
             </tbody>

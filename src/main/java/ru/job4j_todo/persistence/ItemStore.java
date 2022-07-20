@@ -21,19 +21,38 @@ public class ItemStore {
     public List<Item> findAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from Item");
-        List list = query.list();
+        List<Item> list = session.createQuery("from Item").list();
         session.getTransaction().commit();
         session.close();
         return list;
     }
 
-    public void add(Item item) {
+    public List<Item> findAllByCondition(boolean condition) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List listCondition = session.createQuery("from Item i where i.done = :fCondition")
+                .setParameter("fCondition", condition).list();
+        session.getTransaction().commit();
+        session.close();
+        return listCondition;
+    }
+
+    public Item add(Item item) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(item);
         session.getTransaction().commit();
         session.close();
+        return item;
+    }
+
+    public List<Item> findById(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Item> findById = session.createQuery("from Item i where i.id = :fId").setParameter("fId", id).list();
+        session.getTransaction().commit();
+        session.close();
+        return findById;
     }
 
 }
