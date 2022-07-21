@@ -51,8 +51,11 @@
             <tbody>
             <tr th:each="item: ${items}">
                 <td th:text="${item.id}"></td>
-                <a class="dark" th:href="@{|/item/${item.id}|}" th:text="${item.name}"> </a>>
-                <td th:text="${item.name}" />
+                <td>
+                    <a class="dark" th:href="@{|/item/${item.id}|}"
+                       th:text="${item.name}">
+                    </a>
+                </td>
                 <td th:text="${#dates.format(item.created, 'dd-MM-yyyy HH:mm:ss')}" />
                 <td>
                      <span th:if="${!item.isDone}">

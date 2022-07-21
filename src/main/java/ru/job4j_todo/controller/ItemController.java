@@ -56,5 +56,35 @@ public class ItemController {
         return "item";
     }
 
+    @PostMapping("/deleteItem")
+    public String deleteItem(@ModelAttribute Item item) {
+        itemService.remove(item.getId());
+        return "redirect:/allItems";
+    }
+
+    @GetMapping("/updateItem/{itemId}")
+    public String updateItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
+        model.addAttribute("item", itemService.findById(id));
+        return "updateItem";
+    }
+
+    @PostMapping("/updateItem")
+    public String updateItem(@ModelAttribute Item item) {
+        itemService.update(item);
+        return "redirect:/allItems";
+    }
+
+    @GetMapping("/successItem")
+    public String successItem(Model model, @RequestParam int id) {
+        model.addAttribute("item", itemService.findById(id));
+        return "allItems";
+    }
+
+    @PostMapping("/successItem")
+    public String successItem(@ModelAttribute Item item) {
+        item.setDone(true);
+        itemService.findAll();
+        return "doneItems";
+    }
 
 }

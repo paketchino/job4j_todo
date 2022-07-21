@@ -35,4 +35,11 @@ public class ItemService {
     public List<Item> findById(int id) {
         return itemStore.findById(id);
     }
+
+    public List<Item> update(Item item) {
+        return itemStore.update(item);
+    }
+    public void remove(int id) {
+        itemStore.remove(id);
+    }
 }

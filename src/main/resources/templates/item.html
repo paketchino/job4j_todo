@@ -34,14 +34,45 @@
         </div>
     </nav>
     <div class="row">
+        <table class="table">
+            <a th:href="@{|successItem|}">
+                <button type="submit" name="submit_button" value="main_button">
+                    Выполнено</button>
+            </a>
+            <a th:href="@{|updateItem|}">
+                <button type="submit" name="submit_button" value="main_button">
+                    Отредактировать</button>
+            </a>
+            <a th:href="@{|deleteItem|}">
+                <button type="submit" name="submit_button" value="main_button">
+                    Удалить</button>
+            </a>
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Дата создания</th>
+            <th scope="col">Выполнено</th>
+        </tr>
+        </thead>
         <div class="card" style="width: 100%">
-            <tr th:each="item: ${items}">
-                <td th:text="${item.id}"> </td>>
-                <td th:text="${item.name}"> </td>>
-                <td th:text="${item.desciption}"> </td>>
+            <tr th:each="item: ${itemById}">
+                <td th:text="${item.id}"> </td>
+                <td th:text="${item.name}"> </td>
+                <td th:text="${item.descriptionItem}"> </td>
                 <td th:text="${#dates.format(item.created, 'dd-MM-yyyy HH:mm:ss')}" />
-            </tr>>
-            </div>
+                <td>
+                     <span th:if="${!item.isDone}">
+                        <span class="badge badge-warning">В процессе</span>
+                    </span>
+                    <span th:if="${item.isDone}">
+                        <span class="badge badge-success">Выполнено</span>
+                    </span>
+                </td>
+            </tr>
+        </div>
+        </table>>
         </div>
     </div>
 </div>

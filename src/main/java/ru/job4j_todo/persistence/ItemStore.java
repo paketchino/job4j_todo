@@ -55,4 +55,24 @@ public class ItemStore {
         return findById;
     }
 
+    public void remove(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("delete from Item i where i.id = :fId").setParameter("fId", id);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public List<Item> update(Item item) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Item> items = session.createQuery("update Item i set i.name = :iName, i.description = :iDesc where i.id = :iId")
+                .setParameter("iName", item.getName())
+                .setParameter("iDesc", item.getDescription())
+                .setParameter("iId", item.getId()).list();
+        session.getTransaction().commit();
+        session.close();
+        return items;
+    }
+
 }
