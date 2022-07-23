@@ -46,33 +46,49 @@ public class ItemStore {
         return item;
     }
 
-    public List<Item> findById(int id) {
+    public Optional<Item> findById(int id) {
+        Optional<Item> item = Optional.empty();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Item> findById = session.createQuery("from Item i where i.id = :fId").setParameter("fId", id).list();
+        Item findById = (Item) session.createQuery("from Item i where i.id = :fId").setParameter("fId", id).uniqueResult();
         session.getTransaction().commit();
         session.close();
-        return findById;
+        return Optional.of(findById);
     }
 
-    public void remove(int id) {
+    public boolean remove(int id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("delete from Item i where i.id = :fId").setParameter("fId", id);
+        boolean rsl = query.executeUpdate() > 0;
         session.getTransaction().commit();
         session.close();
+        return rsl;
     }
 
-    public List<Item> update(Item item) {
+    public boolean update(Item item) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Item> items = session.createQuery("update Item i set i.name = :iName, i.description = :iDesc where i.id = :iId")
+        Query query = session.createQuery("update Item i set i.name = :iName, i.description = :iDesc where i.id = :iId")
                 .setParameter("iName", item.getName())
                 .setParameter("iDesc", item.getDescription())
-                .setParameter("iId", item.getId()).list();
+                .setParameter("iId", item.getId());
+        boolean rsl = query.executeUpdate() > 0;
         session.getTransaction().commit();
         session.close();
-        return items;
+        return rsl;
+    }
+
+    public boolean updateCondition(Item item) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("update Item i set i.done = :iDone where i.id = :iId")
+                .setParameter("iDone", item.isDone())
+                .setParameter("iId", item.getId());
+        boolean rsl = query.executeUpdate() > 0;
+        session.getTransaction().commit();
+        session.close();
+        return rsl;
     }
 
 }

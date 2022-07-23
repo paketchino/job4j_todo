@@ -3,6 +3,7 @@ package ru.job4j_todo.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,13 +22,12 @@ public class Item {
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private LocalDateTime created = LocalDateTime.now();
 
     private boolean done;
 
 
-    public static Item of(int id, String name, String description, Date created, boolean done) {
+    public static Item of(int id, String name, String description, LocalDateTime created, boolean done) {
         Item item = new Item();
         item.id = id;
         item.name = name;
@@ -61,11 +61,11 @@ public class Item {
         this.description = description;
     }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 

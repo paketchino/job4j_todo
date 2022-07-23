@@ -7,9 +7,11 @@ import ru.job4j_todo.model.Item;
 import ru.job4j_todo.service.ItemService;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Calendar;
 
 @Controller
 public class ItemController {
@@ -28,7 +30,7 @@ public class ItemController {
 
     @GetMapping("/addItem")
     public String addItem(HttpSession session, Model model) {
-        model.addAttribute("item", Item.of(0, "Enter item" ,"Enter desc", new Date(), false));
+        model.addAttribute("item", Item.of(0, "Enter item" ,"Enter desc", LocalDateTime.now(), false));
         return "addItem";
     }
 
@@ -52,12 +54,18 @@ public class ItemController {
 
     @GetMapping("/item/{itemId}")
     public String taskItem(Model model, @PathVariable("itemId") int id) {
-        model.addAttribute("itemById", itemService.findById(id));
+        model.addAttribute("itemById", itemService.findById(id).get());
         return "item";
     }
 
+    @GetMapping("/deleteItem/{itemId}")
+    public String deleteItem(Model model, HttpSession session, @PathVariable("itemId") int id) {
+        model.addAttribute("item", itemService.findById(id));
+        return "deleteItem";
+    }
+
     @PostMapping("/deleteItem")
-    public String deleteItem(@ModelAttribute Item item) {
+    public String deleteItem(@ModelAttribute Item item, HttpSession session) {
         itemService.remove(item.getId());
         return "redirect:/allItems";
     }
@@ -74,17 +82,17 @@ public class ItemController {
         return "redirect:/allItems";
     }
 
-    @GetMapping("/successItem")
-    public String successItem(Model model, @RequestParam int id) {
+    @GetMapping("/successItem/{itemId}")
+    public String successItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
         model.addAttribute("item", itemService.findById(id));
-        return "allItems";
+        return "successItem";
     }
 
     @PostMapping("/successItem")
-    public String successItem(@ModelAttribute Item item) {
+    public String doneItem(@ModelAttribute Item item) {
         item.setDone(true);
-        itemService.findAll();
-        return "doneItems";
+        itemService.updateCondition(item);
+        return "redirect:/doneItems";
     }
 
 }

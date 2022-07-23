@@ -34,45 +34,23 @@
         </div>
     </nav>
     <div class="row">
-        <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Имя</th>
-            <th scope="col">Описание</th>
-            <th scope="col">Дата создания</th>
-            <th scope="col">Выполнено</th>
-        </tr>
-        </thead>
-        <div class="card" style="width: 100%">
-            <tr th:each="item: ${itemById}">
-                <td th:text="${item.name}"> </td>
-                <td th:text="${item.description}"> </td>
-                <td th:text="${item.created}" />
-                <td>
-                     <span th:if="${!item.isDone}">
-                        <span class="badge badge-warning">В процессе</span>
-                    </span>
-                    <span th:if="${item.isDone}">
-                        <span class="badge badge-success">Выполнено</span>
-                    </span>
-                </td>
-                <a th:href="@{|successItem|}">
-                    <button type="submit" name="submit_button" value="main_button">
-                        Выполнено</button>
-                </a>
-                <a th:href="@{|deleteItem|}">
-                    <button type="submit" name="submit_button" value="main_button">
-                        Удалить</button>
-                </a>
-                <a th:href="@{|/updateItem/${item.id}|}">
-                    <button type="submit" name="submit_button" value="main_button">
-                        Отредактировать</button>
-                </a>
-            </tr>
+        <div class="card-header">
+            Обновление вакансии.
         </div>
-        </table>
-        </div>
+        <div class="card-body">
+            <form th:action="@{/updateItem}" method="POST" th:object="${item}">
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <div class="form-group">
+                    <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" class="form-control" name="name" id="name" th:field="*{name}" >
+                <label for="description">Описание</label>
+                <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
     </div>
+</div>
 </div>
 </body>
 </html>

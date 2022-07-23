@@ -32,14 +32,18 @@ public class ItemService {
         return itemStore.add(item);
     }
 
-    public List<Item> findById(int id) {
+    public Optional<Item> findById(int id) {
         return itemStore.findById(id);
     }
 
-    public List<Item> update(Item item) {
+    public boolean update(Item item) {
         return itemStore.update(item);
     }
-    public void remove(int id) {
-        itemStore.remove(id);
+    public boolean remove(int id) {
+        return itemStore.remove(id);
+    }
+
+    public boolean updateCondition(Item item) {
+        return itemStore.updateCondition(item);
     }
 }

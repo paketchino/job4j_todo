@@ -56,7 +56,7 @@
                        th:text="${item.name}">
                     </a>
                 </td>
-                <td th:text="${#dates.format(item.created, 'dd-MM-yyyy HH:mm:ss')}" />
+                <td th:text="${#temporals.format(item.created, 'dd MMMM yyyy')}"></td>
                 <td>
                      <span th:if="${!item.isDone}">
                         <span class="badge badge-warning">В процессе</span>
