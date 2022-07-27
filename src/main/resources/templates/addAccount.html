@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,57 +15,53 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <title>TODO</title>
 </head>
 
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" th:href="@{/allItems}">Все заявки на данный момент</a>
+        <a class="navbar-brand" th:href="@{/allItems}">Количество заявок</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/allItems}">Все заявки</a>
-                <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
-                <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
-                        <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
-                        <span th:text="${account.name}"></span>
-                        <span> | Войти</span>
-                    </a>
-                    <a class="nav-item nav-link" th:if="${account.name != 'Гость'}" th:href="@{/logout}">
-                        <span th:text="${account.name}"></span>
-                        <span> | Выйти</span>
-                    </a>
-                </div>
+                <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
+                    <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
+                    <span th:text="${account.name}"></span>
+                    <span> | Войти</span>
+                </a>
+                <a class="nav-item nav-link" th:if="${account.name != 'Гость'}" th:href="@{/logout}">
+                    <span th:text="${account.name}"></span>
+                    <span> | Выйти</span>
+                </a>
             </div>
         </div>
     </nav>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новая задача для выполнения.
+                Добавление нового пользователя!
             </div>
             <div class="card-body">
-                <form th:action="@{/createItem}" method="POST">
+                <div th:if="${fail}" class="alert alert-danger" role="alert">
+                    Пользователь уже зарегистрирован!
+                </div>
+                <form th:action="@{/registAccount}" method="POST" th:object="${account}">
                     <input type="hidden" name="id" value="0"/>
                     <form>
                         <div class="form-group">
-                            <label>Имя заявки
+                            <label>Name
                                 <input type="text" class="form-control" name="name" id="name">
                             </label>
-                            <label>Описание заявки
-                                <input type="text" class="form-control" name="description" id="description">
+                            <label>login
+                                <input type="text" class="form-control" name="login" id="login">
                             </label>
-                            <div class="form-check">
-                                <input type="checkbox" name="done" class="form-check-input" id="done">
-                                <label class="form-check-label" for="done">Выполнена</label>
-                            </div>
+                            <label>Password
+                                <input type="text" class="form-control" name="password" id="password">
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                     </form>
             </div>
         </div>

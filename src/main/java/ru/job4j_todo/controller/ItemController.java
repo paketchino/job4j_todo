@@ -7,11 +7,7 @@ import ru.job4j_todo.model.Item;
 import ru.job4j_todo.service.ItemService;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 
 @Controller
 public class ItemController {
@@ -30,7 +26,7 @@ public class ItemController {
 
     @GetMapping("/addItem")
     public String addItem(HttpSession session, Model model) {
-        model.addAttribute("item", Item.of(0, "Enter item" ,"Enter desc", LocalDateTime.now(), false));
+        model.addAttribute("item", Item.of(0, "Enter item" ,"Enter desc", LocalDateTime.now(), false, 0));
         return "addItem";
     }
 

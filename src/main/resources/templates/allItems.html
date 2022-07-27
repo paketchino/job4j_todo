@@ -30,6 +30,18 @@
                 <a class="nav-item nav-link" th:href="@{/allItems}">Все заявки</a>
                 <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
+                <a class="nav-item nav-link" th:href="@{/registAccount}">Регистрация</a>
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
+                        <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
+                        <span th:text="${account.name}"></span>
+                        <span> | Войти</span>
+                    </a>
+                    <a class="nav-item nav-link" th:if="${account.name != 'Гость'}" th:href="@{/logout}">
+                        <span th:text="${account.name}"></span>
+                        <span> | Выйти</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>

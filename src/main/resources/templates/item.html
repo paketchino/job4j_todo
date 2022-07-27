@@ -56,11 +56,11 @@
                         <span class="badge badge-success">Выполнено</span>
                     </span>
                 </td>
-                <a th:href="@{|successItem|}">
+                <a th:href="@{|/successItem/${item.id}|}">
                     <button type="submit" name="submit_button" value="main_button">
                         Выполнено</button>
                 </a>
-                <a th:href="@{|deleteItem|}">
+                <a th:href="@{|/deleteItem/${item.id}|}">
                     <button type="submit" name="submit_button" value="main_button">
                         Удалить</button>
                 </a>
