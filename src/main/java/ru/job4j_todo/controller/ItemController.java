@@ -3,7 +3,9 @@ package ru.job4j_todo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
+import ru.job4j_todo.service.AccountService;
 import ru.job4j_todo.service.ItemService;
 
 import javax.servlet.http.HttpSession;
@@ -13,9 +15,20 @@ import java.time.LocalDateTime;
 public class ItemController {
 
     private final ItemService itemService;
+    private final AccountService accountService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, AccountService accountService) {
         this.itemService = itemService;
+        this.accountService = accountService;
+    }
+
+    public Account findUser(HttpSession session) {
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            account = new Account();
+            account.setName("Гость");
+        }
+        return account;
     }
 
     @GetMapping("/allItems")
@@ -26,24 +39,28 @@ public class ItemController {
 
     @GetMapping("/addItem")
     public String addItem(HttpSession session, Model model) {
+        model.addAttribute("account", findUser(session));
         model.addAttribute("item", Item.of(0, "Enter item" ,"Enter desc", LocalDateTime.now(), false, 0));
         return "addItem";
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Item item, HttpSession session) {
+    public String createItem(@ModelAttribute Account account, @ModelAttribute Item item, HttpSession session) {
+        accountService.findAccById(account.getId());
         itemService.add(item);
         return "redirect:/allItems";
     }
 
     @GetMapping("/doneItems")
     public String doneItems(HttpSession session, Model model) {
+        model.addAttribute("account", findUser(session));
         model.addAttribute("items", itemService.findAllByConditionTrue());
         return "doneItems";
     }
 
     @GetMapping("/undoneItems")
     public String undoneItems(HttpSession session, Model model) {
+        model.addAttribute("account", findUser(session));
         model.addAttribute("items", itemService.findAllByConditionFalse());
         return "undoneItems";
     }

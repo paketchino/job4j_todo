@@ -37,4 +37,14 @@ public class AccountStore {
         return list;
     }
 
+    public List<Account> findAccById(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List list = session.createQuery("from Account a where a.id =: aId").setParameter("aId", id)
+                .list();
+        session.getTransaction().commit();
+        session.close();
+        return list;
+    }
+
 }

@@ -26,27 +26,27 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    public void findUser(HttpSession session) {
+    public Account findUser(HttpSession session) {
         Account account = (Account) session.getAttribute("account");
         if (account == null) {
             account = new Account();
             account.setName("Гость");
         }
+        return account;
     }
 
-    @GetMapping("/registAccount")
+    @GetMapping("/addAccount")
     public String addAcc(HttpSession session, Model model,
                          @RequestParam (name = "fail", required = false) Boolean fail ) {
-        findUser(session);
         model.addAttribute("fail", fail != null);
         model.addAttribute("account",  new Account());
-        return "registAccount";
+        return "addAccount";
     }
 
     @PostMapping("/createAccount")
     public String createAccount(@ModelAttribute Account account, HttpSession session, Model model) {
         Optional regAcc = accountService.addAcc(account);
-        findUser(session);
+        model.addAttribute("account", findUser(session));
         if (regAcc.isEmpty()) {
             model.addAttribute("message", "Пользователь уже существует");
             return "redirect:/fail";
@@ -58,8 +58,8 @@ public class AccountController {
     public String loginPage(Model model,
                             @RequestParam(name = "fail", required = false) Boolean fail,
                             HttpSession session) {
+        model.addAttribute("account", findUser(session));
         model.addAttribute("fail", fail != null);
-        findUser(session);
         List<Item> itemsList = new ArrayList<>();
         model.addAttribute("account", Account.of(
                 0, "Enter email", "Enter login", "Enter password", itemsList));
@@ -81,15 +81,15 @@ public class AccountController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        findUser(session);
+    public String logout(HttpSession session, Model model) {
+        model.addAttribute("account", findUser(session));
         session.invalidate();
         return "redirect:/loginPage";
     }
 
     @GetMapping("/fail")
-    public String fail(HttpSession session) {
-        findUser(session);
+    public String fail(HttpSession session, Model model) {
+        model.addAttribute("account", findUser(session));
         return "fail";
     }
 }

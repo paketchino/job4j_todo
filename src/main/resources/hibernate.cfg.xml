@@ -20,5 +20,6 @@
         <property name="use_sql_comments">true</property>
 
         <mapping class="ru.job4j_todo.model.Item"/>
+        <mapping class="ru.job4j_todo.model.Account"/>
     </session-factory>
 </hibernate-configuration>

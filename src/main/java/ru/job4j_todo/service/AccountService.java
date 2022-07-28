@@ -24,6 +24,10 @@ public class AccountService {
         return find(email, password);
     }
 
+    public List<Account> findAccById(int id) {
+        return accountStore.findAccById(id);
+    }
+
     private Optional<Account> find(String login, String password) {
         Optional<Account> findUser = Optional.empty();
         List<Account> accounts = accountStore.findAll();

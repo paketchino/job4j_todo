@@ -47,7 +47,7 @@
                 <div th:if="${fail}" class="alert alert-danger" role="alert">
                     Пользователь уже зарегистрирован!
                 </div>
-                <form th:action="@{/registAccount}" method="POST" th:object="${account}">
+                <form th:action="@{/createAccount}" method="POST" th:object="${account}">
                     <input type="hidden" name="id" value="0"/>
                     <form>
                         <div class="form-group">

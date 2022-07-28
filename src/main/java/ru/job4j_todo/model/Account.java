@@ -20,7 +20,7 @@ public class Account implements Serializable {
 
     private String password;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itemList;
 
     public static Account of(int id, String name, String login, String password, List<Item> itemList) {
