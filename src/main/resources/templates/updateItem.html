@@ -21,7 +21,7 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" th:href="@{/allItems}">Все заявки на данный момент</a>
+        <a class="navbar-brand" th:href="@{/index}">Все заявки на данный момент</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,7 +30,6 @@
                 <a class="nav-item nav-link" th:href="@{/allItems}">Все заявки</a>
                 <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
-                <div class="navbar-nav">
                     <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
                         <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
                         <span th:text="${account.name}"></span>
@@ -40,7 +39,6 @@
                         <span th:text="${account.name}"></span>
                         <span> | Выйти</span>
                     </a>
-                </div>
             </div>
         </div>
     </nav>

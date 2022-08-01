@@ -1,6 +1,7 @@
 package ru.job4j_todo.service;
 
 import org.springframework.stereotype.Service;
+import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
 import ru.job4j_todo.persistence.ItemStore;
 
@@ -28,11 +29,11 @@ public class ItemService {
         return itemStore.findAllByCondition(true);
     }
 
-    public Item add(Item item) {
+    public Optional<Item> add(Item item) {
         return itemStore.add(item);
     }
 
-    public Optional<Item> findById(int id) {
+    public List<Item> findById(int id) {
         return itemStore.findById(id);
     }
 
@@ -41,6 +42,10 @@ public class ItemService {
     }
     public boolean remove(int id) {
         return itemStore.remove(id);
+    }
+
+    public List<Item> findAllByAccount(Account account) {
+        return itemStore.findAllByAccount(account);
     }
 
     public boolean updateCondition(Item item) {

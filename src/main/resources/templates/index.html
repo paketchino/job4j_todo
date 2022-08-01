@@ -27,12 +27,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/addItem}">Все заявки</a>
+                <a class="nav-item nav-link" th:href="@{/allItems}">Все заявки</a>
                 <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
-                    <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
+                    <a class="nav-item nav-link" th:if="${account == 'Гость'}" th:href="@{/loginPage}">
                         <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
-                        <span th:text="${account.name}"></span>
+                        <span th:text="${account.name}"> Войти</span>
                         <span> | Войти</span>
                     </a>
                     <a class="nav-item nav-link" th:if="${account.name != 'Гость'}" th:href="@{/logout}">
@@ -60,18 +60,24 @@
             <tbody>
             <tr th:each="item: ${items}">
                 <td th:text="${item.id}"></td>
-                <td th:text="${item.name}" />
-                <td th:text="${#temporals.format(item.created, 'dd-MM-yyyy HH:mm:ss')}" />
                 <td>
-                    <span th:if="${!item.done}">
-                    <span class="badge badge-warning">В процессе</span>
+                    <a class="dark" th:href="@{|/item/${item.id}|}"
+                       th:text="${item.name}">
+                    </a>
+                </td>
+                <td th:text="${#temporals.format(item.created, 'dd MMMM yyyy')}"></td>
+                <td>
+                     <span th:if="${!item.isDone}">
+                        <span class="badge badge-warning">В процессе</span>
+                    </span>
+                    <span th:if="${item.isDone}">
+                        <span class="badge badge-success">Выполнено</span>
                     </span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-
 </div>
 </body>
 </html>

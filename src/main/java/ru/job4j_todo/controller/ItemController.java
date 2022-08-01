@@ -31,43 +31,55 @@ public class ItemController {
         return account;
     }
 
+    public void findUser(HttpSession session, Model model) {
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            account = new Account();
+            account.setName("Гость");
+        }
+        model.addAttribute("account", account);
+    }
+
     @GetMapping("/allItems")
     public String items(HttpSession session, Model model) {
+        findUser(session, model);
         model.addAttribute("items", itemService.findAll());
         return "allItems";
     }
 
     @GetMapping("/addItem")
-    public String addItem(HttpSession session, Model model) {
-        model.addAttribute("account", findUser(session));
-        model.addAttribute("item", Item.of(0, "Enter item" ,"Enter desc", LocalDateTime.now(), false, 0));
+    public String addItem(HttpSession session, Model model, Account account) {
+        findUser(session);
+
         return "addItem";
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Account account, @ModelAttribute Item item, HttpSession session) {
-        accountService.findAccById(account.getId());
+    public String createItem(@ModelAttribute Item item, HttpSession session) {
+        findUser(session);
         itemService.add(item);
         return "redirect:/allItems";
     }
 
     @GetMapping("/doneItems")
-    public String doneItems(HttpSession session, Model model) {
-        model.addAttribute("account", findUser(session));
+    public String doneItems(HttpSession session, Model model, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         model.addAttribute("items", itemService.findAllByConditionTrue());
         return "doneItems";
     }
 
     @GetMapping("/undoneItems")
-    public String undoneItems(HttpSession session, Model model) {
-        model.addAttribute("account", findUser(session));
+    public String undoneItems(HttpSession session, Model model, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         model.addAttribute("items", itemService.findAllByConditionFalse());
         return "undoneItems";
     }
 
     @GetMapping("/item/{itemId}")
     public String taskItem(Model model, @PathVariable("itemId") int id) {
-        model.addAttribute("itemById", itemService.findById(id).get());
+        model.addAttribute("itemById", itemService.findById(id));
         return "item";
     }
 

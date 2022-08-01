@@ -2,8 +2,10 @@ package ru.job4j_todo.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j_todo.model.Account;
+import ru.job4j_todo.model.Item;
 import ru.job4j_todo.persistence.AccountStore;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,7 @@ public class AccountService {
     }
 
     public Optional<Account> addAcc(Account account) {
-        return accountStore.addAcc(account);
+        return accountStore.addAccount(account);
     }
 
     public Optional<Account> findUserByLoginAndPwd(String email, String password) {

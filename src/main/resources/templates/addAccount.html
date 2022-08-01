@@ -25,17 +25,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
-                    <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
-                    <span th:text="${account.name}"></span>
-                    <span> | Войти</span>
-                </a>
-                <a class="nav-item nav-link" th:if="${account.name != 'Гость'}" th:href="@{/logout}">
-                    <span th:text="${account.name}"></span>
-                    <span> | Выйти</span>
-                </a>
-            </div>
+
         </div>
     </nav>
     <div class="row">

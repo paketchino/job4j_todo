@@ -2,8 +2,6 @@ package ru.job4j_todo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,20 +14,21 @@ public class Account implements Serializable {
 
     private String name;
 
+    @Column (unique = true)
     private String login;
 
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item> itemList;
 
-    public static Account of(int id, String name, String login, String password, List<Item> itemList) {
+    public Account() {
+    }
+
+    public static Account of(int id, String name, String login, String password) {
         Account account = new Account();
         account.id = id;
         account.name = name;
         account.login = login;
         account.password = password;
-        account.itemList = new ArrayList<>(itemList);
         return account;
     }
 
@@ -37,13 +36,6 @@ public class Account implements Serializable {
         return id;
     }
 
-    public List<Item> getItemList() {
-        return itemList;
-    }
-
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -94,7 +86,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Account - id =: %s, name =: %s, login =:%s, password =:%s, lists =: %s",
-                id, name, login, password, itemList);
+        return String.format("Account - id =: %s, name =: %s, login =:%s, password =:%s",
+                id, name, login, password);
     }
 }

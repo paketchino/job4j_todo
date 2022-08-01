@@ -25,18 +25,22 @@ public class Item implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime created = LocalDateTime.now();
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     private boolean done;
 
-    private int account_id;
-
-    public static Item of(int id, String name, String description, LocalDateTime created, boolean done, int account_id) {
+    public Item() {
+    }
+    public static Item of(int id, String name, String description, LocalDateTime created, boolean done, Account account) {
         Item item = new Item();
         item.id = id;
         item.name = name;
         item.description = description;
         item.created = created;
         item.done = done;
-        item.account_id = account_id;
+        item.account = account;
         return item;
     }
 
@@ -80,6 +84,14 @@ public class Item implements Serializable {
         this.done = done;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -97,12 +109,12 @@ public class Item implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, created, done, account_id);
+        return Objects.hash(id, description, created, done, account);
     }
 
     @Override
     public String toString() {
-        return String.format("Item - id: = %s, name: = %s, descItem: = %s, created: = %s, boolean: = %s, account_id: = %s",
-                id, name, description, created, done, account_id);
+        return String.format("Item - id: = %s, name: = %s, descItem: = %s, created: = %s, boolean: = %s",
+                id, name, description, created, done);
     }
 }

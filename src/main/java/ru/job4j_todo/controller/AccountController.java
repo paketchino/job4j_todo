@@ -12,6 +12,7 @@ import ru.job4j_todo.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,11 +59,10 @@ public class AccountController {
     public String loginPage(Model model,
                             @RequestParam(name = "fail", required = false) Boolean fail,
                             HttpSession session) {
-        model.addAttribute("account", findUser(session));
         model.addAttribute("fail", fail != null);
-        List<Item> itemsList = new ArrayList<>();
+        findUser(session);
         model.addAttribute("account", Account.of(
-                0, "Enter email", "Enter login", "Enter password", itemsList));
+                0, "Enter email", "Enter login", "Enter password"));
         return "login";
     }
 
@@ -89,7 +89,7 @@ public class AccountController {
 
     @GetMapping("/fail")
     public String fail(HttpSession session, Model model) {
-        model.addAttribute("account", findUser(session));
+        findUser(session);
         return "fail";
     }
 }
