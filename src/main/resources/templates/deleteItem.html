@@ -49,7 +49,9 @@
         <div class="card-body">
             <form th:action="@{|deleteItem|}" method="POST" th:object="${item}">
                 <input type="hidden" name="id" th:field="*{id}"/>
+                <a th:href="@{|confirmationDelete|}">
                     <button type="submit" class="btn btn-primary">Потвердить</button>
+                </a>
             </form>
         </div>
     </div>

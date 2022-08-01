@@ -5,19 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
-import ru.job4j_todo.service.AccountService;
-import ru.job4j_todo.service.ItemService;
+import ru.job4j_todo.service.AccountServiceService;
+import ru.job4j_todo.service.ItemServiceService;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 
 @Controller
 public class ItemController {
 
-    private final ItemService itemService;
-    private final AccountService accountService;
+    private final ItemServiceService itemService;
+    private final AccountServiceService accountService;
 
-    public ItemController(ItemService itemService, AccountService accountService) {
+    public ItemController(ItemServiceService itemService, AccountServiceService accountService) {
         this.itemService = itemService;
         this.accountService = accountService;
     }
@@ -31,18 +30,11 @@ public class ItemController {
         return account;
     }
 
-    public void findUser(HttpSession session, Model model) {
-        Account account = (Account) session.getAttribute("account");
-        if (account == null) {
-            account = new Account();
-            account.setName("Гость");
-        }
-        model.addAttribute("account", account);
-    }
 
     @GetMapping("/allItems")
-    public String items(HttpSession session, Model model) {
-        findUser(session, model);
+    public String items(HttpSession session, Model model, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         model.addAttribute("items", itemService.findAll());
         return "allItems";
     }
@@ -78,37 +70,48 @@ public class ItemController {
     }
 
     @GetMapping("/item/{itemId}")
-    public String taskItem(Model model, @PathVariable("itemId") int id) {
-        model.addAttribute("itemById", itemService.findById(id));
+    public String taskItem(Model model, @PathVariable("itemId") int id, HttpSession session, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
+        model.addAttribute("itemById", itemService.findById(id).get());
         return "item";
     }
 
     @GetMapping("/deleteItem/{itemId}")
-    public String deleteItem(Model model, HttpSession session, @PathVariable("itemId") int id) {
+    public String deleteItem(Model model, HttpSession session, @PathVariable("itemId") int id, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         model.addAttribute("item", itemService.findById(id));
         return "deleteItem";
     }
 
-    @PostMapping("/deleteItem")
-    public String deleteItem(@ModelAttribute Item item, HttpSession session) {
+    @PostMapping("/deleteItem/deleteItem")
+    public String deleteItem(@ModelAttribute Item item, HttpSession session, Model model) {
+        findUser(session);
         itemService.remove(item.getId());
         return "redirect:/allItems";
     }
 
     @GetMapping("/updateItem/{itemId}")
-    public String updateItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
+    public String updateItem(Model model, @PathVariable("itemId") int id, HttpSession session, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         model.addAttribute("item", itemService.findById(id));
         return "updateItem";
     }
 
     @PostMapping("/updateItem")
-    public String updateItem(@ModelAttribute Item item) {
+    public String updateItem(@ModelAttribute Item item, HttpSession session, Model model, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         itemService.update(item);
         return "redirect:/allItems";
     }
 
     @GetMapping("/successItem/{itemId}")
-    public String successItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
+    public String successItem(Model model, @PathVariable("itemId") int id, HttpSession session, Account account) {
+        findUser(session);
+        model.addAttribute("account", account);
         model.addAttribute("item", itemService.findById(id));
         return "successItem";
     }

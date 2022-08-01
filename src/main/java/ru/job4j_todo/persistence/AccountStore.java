@@ -1,18 +1,18 @@
 package ru.job4j_todo.persistence;
 
+import net.jcip.annotations.ThreadSafe;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.job4j_todo.model.Account;
-
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@ThreadSafe
 @Repository
-public class AccountStore {
+public class AccountStore implements AccountStoreInterface {
 
     private final SessionFactory sessionFactory;
 
@@ -20,6 +20,7 @@ public class AccountStore {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public Optional<Account> addAccount(Account account) {
         Optional<Account> rsl = Optional.empty();
         Account account1 = this.tx(
@@ -34,10 +35,12 @@ public class AccountStore {
         return rsl;
     }
 
+    @Override
     public List<Account> findAll() {
         return tx(session -> session.createQuery("from Account ").list());
     }
 
+    @Override
     public List<Account> findAccById(int id) {
         return tx(session ->
                 session.createQuery("from Account a where a.id = :aId")

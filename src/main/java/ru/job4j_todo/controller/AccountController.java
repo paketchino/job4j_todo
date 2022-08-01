@@ -1,5 +1,6 @@
 package ru.job4j_todo.controller;
 
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,23 +8,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j_todo.model.Account;
-import ru.job4j_todo.model.Item;
-import ru.job4j_todo.service.AccountService;
+import ru.job4j_todo.service.AccountServiceService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
+@ThreadSafe
 @Controller
 public class AccountController {
 
-    private final AccountService accountService;
+    private final AccountServiceService accountService;
 
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountServiceService accountService) {
         this.accountService = accountService;
     }
 
@@ -46,7 +44,7 @@ public class AccountController {
 
     @PostMapping("/createAccount")
     public String createAccount(@ModelAttribute Account account, HttpSession session, Model model) {
-        Optional regAcc = accountService.addAcc(account);
+        Optional regAcc = accountService.addAccount(account);
         model.addAttribute("account", findUser(session));
         if (regAcc.isEmpty()) {
             model.addAttribute("message", "Пользователь уже существует");
