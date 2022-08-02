@@ -67,9 +67,10 @@ public class ItemStore implements ItemStoreInterface {
 
     @Override
     public boolean update(Item item) {
-        return tx(session -> session.createQuery("update Item i set i.name = :iName, i.description = :iDesc where i.id = :iId")
+        return tx(session -> session.createQuery("update Item i set i.name = :iName, i.description = :iDesc, i.done = :iFalse where i.id = :iId")
                 .setParameter("iName", item.getName())
                 .setParameter("iDesc", item.getDescription())
+                .setParameter("iFalse", item.isDone())
                 .setParameter("iId", item.getId()).executeUpdate() > 0);
     }
 

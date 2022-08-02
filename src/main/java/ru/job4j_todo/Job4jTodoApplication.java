@@ -20,6 +20,7 @@ public class Job4jTodoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Job4jTodoApplication.class, args);
+		System.out.println("Go to http://localhost:8080/loginPage");
 	}
 
 }

@@ -31,7 +31,7 @@ public class ItemControllerTest {
         AccountServiceService accountService = mock(AccountServiceService.class);
         Mockito.when(service.findAll()).thenReturn(items);
         ItemController itemController = new ItemController(service, accountService);
-        String page = itemController.items(session, model, new Account());
+        String page = itemController.items(session, model);
         Mockito.verify(model).addAttribute("items", items);
         assertThat(page, is("allItems"));
     }
@@ -41,10 +41,11 @@ public class ItemControllerTest {
         Account account = Account.of(10, "Sergey", "gay32", "1244");
         Item item35 = Item.of(35, "Очень важная задача", "Нужно сделать что то важное", LocalDateTime.now(),true, new Account());
         HttpSession session = mock(HttpSession.class);
+        Model model = mock(Model.class);
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
         ItemController itemController = new ItemController(service, accountService);
-        String page = itemController.createItem(item35, session);
+        String page = itemController.createItem(item35, session, model);
         verify(service).add(item35);
         assertThat(page, is("redirect:/allItems"));
     }

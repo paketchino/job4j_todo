@@ -18,7 +18,7 @@ public class AuthorizationAccount implements Filter {
         if (uri.endsWith("loginPage")
                 || uri.endsWith("login")
                 || uri.endsWith("addAccount")
-                || uri.endsWith("createAccount")) {
+                || uri.endsWith("registration")) {
             filterChain.doFilter(req, res);
             return;
         }

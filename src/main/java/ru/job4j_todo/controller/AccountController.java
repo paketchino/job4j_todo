@@ -20,37 +20,30 @@ public class AccountController {
 
     private final AccountServiceService accountService;
 
-
     public AccountController(AccountServiceService accountService) {
         this.accountService = accountService;
     }
 
-    public Account findUser(HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
-        if (account == null) {
-            account = new Account();
-            account.setName("Гость");
-        }
-        return account;
-    }
 
     @GetMapping("/addAccount")
     public String addAcc(HttpSession session, Model model,
                          @RequestParam (name = "fail", required = false) Boolean fail ) {
         model.addAttribute("fail", fail != null);
-        model.addAttribute("account",  new Account());
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         return "addAccount";
     }
 
     @PostMapping("/createAccount")
     public String createAccount(@ModelAttribute Account account, HttpSession session, Model model) {
         Optional regAcc = accountService.addAccount(account);
-        model.addAttribute("account", findUser(session));
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         if (regAcc.isEmpty()) {
             model.addAttribute("message", "Пользователь уже существует");
             return "redirect:/fail";
         }
-        return "redirect:/allItems";
+        return "redirect:/loginPage";
     }
 
     @GetMapping("/loginPage")
@@ -58,14 +51,13 @@ public class AccountController {
                             @RequestParam(name = "fail", required = false) Boolean fail,
                             HttpSession session) {
         model.addAttribute("fail", fail != null);
-        findUser(session);
-        model.addAttribute("account", Account.of(
-                0, "Enter email", "Enter login", "Enter password"));
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute Account account, HttpServletRequest req) {
+    public String login(@ModelAttribute Account account, HttpServletRequest req, Model model) {
         Optional<Account> accountStore = accountService.findUserByLoginAndPwd(
                 account.getLogin(), account.getPassword()
         );
@@ -73,21 +65,24 @@ public class AccountController {
             return "redirect:/loginPage?fail=true";
         }
         HttpSession session = req.getSession();
-        findUser(session);
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         session.setAttribute("account", accountStore.get());
         return "redirect:/allItems";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model) {
-        model.addAttribute("account", findUser(session));
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         session.invalidate();
         return "redirect:/loginPage";
     }
 
     @GetMapping("/fail")
     public String fail(HttpSession session, Model model) {
-        findUser(session);
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         return "fail";
     }
 }

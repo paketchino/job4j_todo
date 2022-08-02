@@ -19,18 +19,10 @@ public class IndexController {
         this.itemStore = itemStore;
     }
 
-    public void findUser(HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
-        if (account == null) {
-            account = new Account();
-            account.setName("Гость");
-        }
-    }
-
     @GetMapping("/index")
-    public String index(Model model, HttpSession session, Account account) {
-        findUser(session);
-        model.addAttribute("account", account);
+    public String index(Model model, HttpSession session) {
+        FindUser findUser = new FindUser();
+        findUser.findUser(session, model);
         model.addAttribute("items", itemStore.findAll());
         return "index";
     }
