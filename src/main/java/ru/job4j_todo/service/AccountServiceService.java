@@ -24,7 +24,7 @@ public class AccountServiceService implements AccountServiceInterface {
 
     @Override
     public Optional<Account> findUserByLoginAndPwd(String email, String password) {
-        return find(email, password);
+        return accountStore.findLoginAndPassword(email, password);
     }
 
     @Override
@@ -32,15 +32,4 @@ public class AccountServiceService implements AccountServiceInterface {
         return accountStore.findAccById(id);
     }
 
-    private Optional<Account> find(String login, String password) {
-        Optional<Account> findUser = Optional.empty();
-        List<Account> accounts = accountStore.findAll();
-        for (Account account : accounts) {
-            if (account.getLogin().equals(login)
-                    && account.getPassword().equals(password)) {
-                findUser = Optional.of(account);
-            }
-        }
-        return findUser;
-    }
 }

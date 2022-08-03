@@ -45,7 +45,7 @@ public class ItemControllerTest {
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
         ItemController itemController = new ItemController(service, accountService);
-        String page = itemController.createItem(item35, session, model);
+        String page = itemController.createItem(item35);
         verify(service).add(item35);
         assertThat(page, is("redirect:/allItems"));
     }
@@ -72,7 +72,7 @@ public class ItemControllerTest {
         AccountServiceService accountService = mock(AccountServiceService.class);
         Model model = mock(Model.class);
         ItemController itemController = new ItemController(service, accountService);
-        String page = itemController.deleteItem(item35, session, model);
+        String page = itemController.deleteItem(item35);
         verify(service).remove(item35.getId());
         assertThat(page, is("redirect:/allItems"));
     }

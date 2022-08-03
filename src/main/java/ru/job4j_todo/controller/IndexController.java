@@ -21,8 +21,7 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(Model model, HttpSession session) {
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
+        FindUser.findUser(session, model);
         model.addAttribute("items", itemStore.findAll());
         return "index";
     }

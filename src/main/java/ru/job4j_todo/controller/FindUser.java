@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 public class FindUser {
 
-    public void findUser(HttpSession session, Model model) {
+    public static void findUser(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
         if (account == null) {
             account = new Account();

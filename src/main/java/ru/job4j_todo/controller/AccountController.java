@@ -29,16 +29,13 @@ public class AccountController {
     public String addAcc(HttpSession session, Model model,
                          @RequestParam (name = "fail", required = false) Boolean fail ) {
         model.addAttribute("fail", fail != null);
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
+        FindUser.findUser(session, model);
         return "addAccount";
     }
 
     @PostMapping("/createAccount")
     public String createAccount(@ModelAttribute Account account, HttpSession session, Model model) {
         Optional regAcc = accountService.addAccount(account);
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
         if (regAcc.isEmpty()) {
             model.addAttribute("message", "Пользователь уже существует");
             return "redirect:/fail";
@@ -51,8 +48,7 @@ public class AccountController {
                             @RequestParam(name = "fail", required = false) Boolean fail,
                             HttpSession session) {
         model.addAttribute("fail", fail != null);
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
+        FindUser.findUser(session, model);
         return "login";
     }
 
@@ -65,24 +61,19 @@ public class AccountController {
             return "redirect:/loginPage?fail=true";
         }
         HttpSession session = req.getSession();
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
         session.setAttribute("account", accountStore.get());
         return "redirect:/allItems";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model) {
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
+        FindUser.findUser(session, model);
         session.invalidate();
         return "redirect:/loginPage";
     }
 
     @GetMapping("/fail")
-    public String fail(HttpSession session, Model model) {
-        FindUser findUser = new FindUser();
-        findUser.findUser(session, model);
+    public String fail() {
         return "fail";
     }
 }

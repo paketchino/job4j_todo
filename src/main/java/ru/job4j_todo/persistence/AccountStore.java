@@ -35,6 +35,13 @@ public class AccountStore implements AccountStoreInterface {
         return rsl;
     }
 
+    public Optional findLoginAndPassword(String login, String password) {
+        return tx(session -> session.createQuery("from Account a where a.login = :aLogin and a.password =: aPassword")
+                .setParameter("aLogin", login)
+                .setParameter("aPassword", password)
+                .uniqueResultOptional());
+    }
+
     @Override
     public List<Account> findAll() {
         return tx(session -> session.createQuery("from Account ").list());
