@@ -1,5 +1,6 @@
 package ru.job4j_todo.controller;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,9 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Item item) {
-        itemService.add(item);
+    public String createItem(@ModelAttribute Item item, @ModelAttribute Account account, HttpSession session, Model model) {
+        FindUser.findUser(session, model);
+        itemService.add(item, account);
         return "redirect:/allItems";
     }
 

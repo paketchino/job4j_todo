@@ -8,13 +8,15 @@ import java.util.Optional;
 
 public interface ItemServiceInterface {
 
+    List<Item> findAll(Account account);
+
     List<Item> findAll();
 
     List<Item> findAllByConditionFalse();
 
     List<Item> findAllByConditionTrue();
 
-    Optional<Item> add(Item item);
+    Optional<Item> add(Item item, Account account);
 
     Optional<Item> findById(int id);
 

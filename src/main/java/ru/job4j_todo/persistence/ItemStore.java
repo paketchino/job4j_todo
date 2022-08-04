@@ -23,8 +23,16 @@ public class ItemStore implements ItemStoreInterface {
     }
 
     @Override
+    public List<Item> findAll(Account account) {
+        return tx(session -> session.createQuery("from Item i where i.account = :iAccount")
+                .setParameter("iAccount", account.getId())
+                .list());
+    }
+
+    @Override
     public List<Item> findAll() {
-        return tx(session -> session.createQuery("from Item").list());
+        return tx(session -> session.createQuery("from Item")
+                .list());
     }
 
     @Override
@@ -34,9 +42,11 @@ public class ItemStore implements ItemStoreInterface {
     }
 
     @Override
-    public Optional<Item> add(Item item) {
+    public Optional<Item> add(Item item, Account account) {
         Optional<Item> optionalItem = Optional.empty();
         Item item1 = this.tx(session -> {
+            Account reaccount = new Account();
+            reaccount.setId(account.getId());
             session.save(item);
             return item;
         });

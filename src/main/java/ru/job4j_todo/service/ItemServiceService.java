@@ -20,6 +20,11 @@ public class ItemServiceService implements ItemServiceInterface {
     }
 
     @Override
+    public List<Item> findAll(Account account) {
+        return itemStore.findAll(account);
+    }
+
+    @Override
     public List<Item> findAll() {
         return itemStore.findAll();
     }
@@ -35,8 +40,8 @@ public class ItemServiceService implements ItemServiceInterface {
     }
 
     @Override
-    public Optional<Item> add(Item item) {
-        return itemStore.add(item);
+    public Optional<Item> add(Item item, Account account) {
+        return itemStore.add(item, account);
     }
 
     @Override

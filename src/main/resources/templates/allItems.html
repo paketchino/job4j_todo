@@ -55,6 +55,7 @@
                 <th scope="col">Имя</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Выполнено</th>
+                <th scope="col">Пользователь</th>
             </tr>
             </thead>
             <tbody>
@@ -74,6 +75,7 @@
                         <span class="badge badge-success">Выполнено</span>
                     </span>
                 </td>
+                <td th:text="${item.account}"> </td>
             </tr>
             </tbody>
         </table>

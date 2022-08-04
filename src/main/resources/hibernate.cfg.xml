@@ -21,5 +21,9 @@
 
         <mapping class="ru.job4j_todo.model.Account"/>
         <mapping class="ru.job4j_todo.model.Item"/>
+
+        <mapping class="ru.job4j_todo.toone.Role"/>
+        <mapping class="ru.job4j_todo.toone.User"/>
+
     </session-factory>
 </hibernate-configuration>
