@@ -23,9 +23,8 @@ public class ItemStore implements ItemStoreInterface {
     }
 
     @Override
-    public List<Account> findAllAccount() {
-        return tx(session -> session.createQuery("from Account")
-                .list());
+    public Optional<Account> findAccount(Account account) {
+        return tx(session -> session.createQuery("from Account a where a.id = :aAcc").setParameter("aAcc", account.getId()).uniqueResultOptional());
     }
 
     @Override

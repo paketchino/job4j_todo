@@ -24,8 +24,9 @@ public class ItemController {
 
 
     @GetMapping("/allItems")
-    public String items(HttpSession session, Model model) {
+    public String items(HttpSession session, Model model, @ModelAttribute Account account) {
         FindUser.findUser(session, model);
+        model.addAttribute("account", itemService.findAccount(account));
         model.addAttribute("items", itemService.findAll());
         return "allItems";
     }
