@@ -1,10 +1,13 @@
 package ru.job4j_todo.filter;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class AuthorizationAccount implements Filter {
 
     @Override
@@ -15,11 +18,7 @@ public class AuthorizationAccount implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         String uri = req.getRequestURI();
-        if (uri.endsWith("loginPage")
-                || uri.endsWith("addAccount")
-                || uri.endsWith("allItems")
-                || uri.endsWith("doneItems")
-                || uri.endsWith("undoneItems")) {
+        if (uri.endsWith("allItems") || uri.endsWith("loginPage")) {
             filterChain.doFilter(req, res);
             return;
         }
