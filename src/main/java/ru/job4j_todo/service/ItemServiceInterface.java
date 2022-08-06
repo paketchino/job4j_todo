@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ItemServiceInterface {
 
-    List<Item> findAll(Account account);
+    List<Account> findAllAccount();
 
     List<Item> findAll();
 

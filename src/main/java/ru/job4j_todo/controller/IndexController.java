@@ -23,7 +23,7 @@ public class IndexController {
     @GetMapping("/index")
     public String index(Model model, HttpSession session, @ModelAttribute Account account) {
         FindUser.findUser(session, model);
-        model.addAttribute("items", itemStore.findAll(account));
+        model.addAttribute("items", itemStore.findAllAccount());
         return "index";
     }
 }

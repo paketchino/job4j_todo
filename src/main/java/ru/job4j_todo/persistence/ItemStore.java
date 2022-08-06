@@ -23,9 +23,8 @@ public class ItemStore implements ItemStoreInterface {
     }
 
     @Override
-    public List<Item> findAll(Account account) {
-        return tx(session -> session.createQuery("from Item i where i.account = :iAccount")
-                .setParameter("iAccount", account.getId())
+    public List<Account> findAllAccount() {
+        return tx(session -> session.createQuery("from Account")
                 .list());
     }
 

@@ -20,8 +20,8 @@ public class ItemServiceService implements ItemServiceInterface {
     }
 
     @Override
-    public List<Item> findAll(Account account) {
-        return itemStore.findAll(account);
+    public List<Account> findAllAccount() {
+        return itemStore.findAllAccount();
     }
 
     @Override
