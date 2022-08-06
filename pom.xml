@@ -22,7 +22,18 @@
 
 
 	<profiles>
-
+		<profile>
+			<id>test</id>
+			<properties>
+				<db.url>jdbc:h2:${basedir}/testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</db.url>
+				<db.username></db.username>
+				<db.password></db.password>
+				<db.driver>org.h2.Driver</db.driver>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
 		<profile>
 			<id>production</id>
 			<properties>
@@ -72,6 +83,11 @@
 			<artifactId>mockito-core</artifactId>
 			<version>3.5.13</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
