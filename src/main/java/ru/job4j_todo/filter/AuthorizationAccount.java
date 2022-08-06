@@ -18,7 +18,9 @@ public class AuthorizationAccount implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         String uri = req.getRequestURI();
-        if (uri.endsWith("allItems") || uri.endsWith("loginPage")) {
+        if (uri.endsWith("loginPage")
+                || uri.endsWith("addAccount")
+                || uri.endsWith("login")) {
             filterChain.doFilter(req, res);
             return;
         }

@@ -13,9 +13,27 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>job4j_todo</name>
 	<description>job4j_todo</description>
+
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+
+
+	<profiles>
+
+		<profile>
+			<id>production</id>
+			<properties>
+				<db.url>jdbc:postgresql://127.0.0.1:5432/item</db.url>
+				<db.username>postgres</db.username>
+				<db.password>12345</db.password>
+				<db.driver>org.postgresql.Driver</db.driver>
+			</properties>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
