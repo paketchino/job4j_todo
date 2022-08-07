@@ -20,7 +20,8 @@ public class AuthorizationAccount implements Filter {
         String uri = req.getRequestURI();
         if (uri.endsWith("loginPage")
                 || uri.endsWith("addAccount")
-                || uri.endsWith("login")) {
+                || uri.endsWith("login")
+                || uri.endsWith("createAccount")) {
             filterChain.doFilter(req, res);
             return;
         }
