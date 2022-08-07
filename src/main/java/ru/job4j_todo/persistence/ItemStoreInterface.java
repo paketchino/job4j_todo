@@ -12,7 +12,7 @@ public interface ItemStoreInterface {
 
     Optional<Account> findAccount(Account account);
 
-    Optional<Item> add(Item item, Account account);
+    Optional<Item> add(Item item);
 
     List<Item> findAllByCondition(boolean condition);
 

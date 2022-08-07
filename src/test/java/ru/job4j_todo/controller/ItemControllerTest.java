@@ -49,8 +49,8 @@ public class ItemControllerTest {
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
         ItemController itemController = new ItemController(service, accountService);
-        String page = itemController.createItem(item35, account, session, model);
-        verify(service).add(item35, account);
+        String page = itemController.createItem(item35);
+        verify(service).add(item35);
         assertThat(page, is("redirect:/allItems"));
     }
 

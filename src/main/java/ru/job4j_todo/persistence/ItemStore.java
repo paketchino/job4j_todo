@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
+import ru.job4j_todo.service.ItemServiceService;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,8 @@ public class ItemStore implements ItemStoreInterface {
 
     @Override
     public Optional<Account> findAccount(Account account) {
-        return tx(session -> session.createQuery("from Account a where a.id = :aAcc").setParameter("aAcc", account.getId()).uniqueResultOptional());
+        return tx(session -> session.createQuery("from Item i where i.account = :aAcc")
+                .setParameter("aAcc", account).uniqueResultOptional());
     }
 
     @Override
@@ -40,11 +42,9 @@ public class ItemStore implements ItemStoreInterface {
     }
 
     @Override
-    public Optional<Item> add(Item item, Account account) {
+    public Optional<Item> add(Item item) {
         Optional<Item> optionalItem = Optional.empty();
         Item item1 = this.tx(session -> {
-            Account reaccount = new Account();
-            reaccount.setId(account.getId());
             session.save(item);
             return item;
         });

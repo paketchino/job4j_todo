@@ -16,7 +16,7 @@ public interface ItemServiceInterface {
 
     List<Item> findAllByConditionTrue();
 
-    Optional<Item> add(Item item, Account account);
+    Optional<Item> add(Item item);
 
     Optional<Item> findById(int id);
 

@@ -24,9 +24,8 @@ public class ItemController {
 
 
     @GetMapping("/allItems")
-    public String items(HttpSession session, Model model, @ModelAttribute Account account) {
+    public String items(HttpSession session, Model model) {
         FindUser.findUser(session, model);
-        model.addAttribute("account", itemService.findAccount(account));
         model.addAttribute("items", itemService.findAll());
         return "allItems";
     }
@@ -38,9 +37,10 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Item item, @ModelAttribute Account account, HttpSession session, Model model) {
+    public String createItem(@ModelAttribute Item item, HttpSession session, Model model) {
         FindUser.findUser(session, model);
-        itemService.add(item, account);
+        item.setAccount((Account) session.getAttribute("account"));
+        itemService.add(item);
         return "redirect:/allItems";
     }
 

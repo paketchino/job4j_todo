@@ -25,7 +25,7 @@ public class Item implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime created = LocalDateTime.now();
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
 
