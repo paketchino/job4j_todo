@@ -14,5 +14,3 @@ create table if not exists items(
                                     account_id INT REFERENCES accounts(id)
 );
 
-
-ALTER TABLE items ADD CONSTRAINT

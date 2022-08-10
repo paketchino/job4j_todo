@@ -25,14 +25,17 @@ public class ItemStore implements ItemStoreInterface {
 
     @Override
     public Optional<Account> findAccount(Account account) {
-        return tx(session -> session.createQuery("from Item i where i.account = :aAcc")
-                .setParameter("aAcc", account).uniqueResultOptional());
+        return tx(session -> session.createQuery("from Item i where i.account.name = :iName")
+                .setParameter("iName", account.getName())).uniqueResultOptional();
     }
 
     @Override
     public List<Item> findAll() {
-        return tx(session -> session.createQuery("from Item")
+        List<Item> items = tx(session -> session.createQuery("from Item")
                 .list());
+        items.forEach(item ->
+                item.setAccount(findAccount(item.getAccount()).get()));
+        return items;
     }
 
     @Override

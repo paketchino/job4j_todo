@@ -26,11 +26,7 @@ public class ItemServiceService implements ItemServiceInterface {
 
     @Override
     public List<Item> findAll() {
-        List<Item> items = itemStore.findAll();
-        items.forEach(
-                item -> item.setAccount(findAccount(item.getAccount()).get())
-        );
-        return items;
+        return itemStore.findAll();
     }
 
     @Override

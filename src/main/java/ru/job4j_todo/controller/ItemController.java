@@ -1,11 +1,11 @@
 package ru.job4j_todo.controller;
 
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
+import ru.job4j_todo.persistence.ItemStore;
 import ru.job4j_todo.service.AccountServiceService;
 import ru.job4j_todo.service.ItemServiceService;
 
@@ -21,7 +21,6 @@ public class ItemController {
         this.itemService = itemService;
         this.accountService = accountService;
     }
-
 
     @GetMapping("/allItems")
     public String items(HttpSession session, Model model) {

@@ -33,7 +33,7 @@ public class ItemControllerTest {
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
         Mockito.when(service.findAll(account)).thenReturn(items);
-        ItemController itemController = new ItemController(service, accountService);
+        ItemController itemController = new ItemController(service, itemStore, accountService);
         String page = itemController.items(session, model);
         Mockito.verify(model).addAttribute("items", items);
         assertThat(page, is("allItems"));
@@ -48,7 +48,7 @@ public class ItemControllerTest {
         Model model = mock(Model.class);
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
-        ItemController itemController = new ItemController(service, accountService);
+        ItemController itemController = new ItemController(service, itemStore, accountService);
         String page = itemController.createItem(item35);
         verify(service).add(item35);
         assertThat(page, is("redirect:/allItems"));
@@ -63,7 +63,7 @@ public class ItemControllerTest {
         HttpSession session = mock(HttpSession.class);
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
-        ItemController itemController = new ItemController(service, accountService);
+        ItemController itemController = new ItemController(service, itemStore, accountService);
         Mockito.when(service.findById(35)).thenReturn(Optional.of(Item.of(35, "Очень важная задача", "Нужно сделать что то важное", LocalDateTime.now(), true,
                 new Account())));
         assertThat(item35, is(service.findById(35)));
@@ -77,7 +77,7 @@ public class ItemControllerTest {
         ItemServiceService service = mock(ItemServiceService.class);
         AccountServiceService accountService = mock(AccountServiceService.class);
         Model model = mock(Model.class);
-        ItemController itemController = new ItemController(service, accountService);
+        ItemController itemController = new ItemController(service, itemStore, accountService);
         String page = itemController.deleteItem(item35);
         verify(service).remove(item35.getId());
         assertThat(page, is("redirect:/allItems"));
