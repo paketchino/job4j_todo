@@ -50,9 +50,18 @@
                 Новая задача для выполнения.
             </div>
             <div class="card-body">
-                <form th:action="@{/createItem}" method="POST">
+                <form th:action="@{/createItem}" method="POST" th:object="${item}">
                     <input type="hidden" name="id" value="0"/>
                     <form>
+                        <div class="form-group">
+                            <label for="city.id">Категории</label>
+                            <select class="form-control" id="city.id" name="city.id">
+                                <option
+                                        th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}">e
+                                </option>
+                            </select>
                         <div class="form-group">
                             <label>Имя заявки
                                 <input type="text" class="form-control" name="name" id="name">

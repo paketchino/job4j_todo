@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
-import ru.job4j_todo.service.ItemServiceService;
+import ru.job4j_todo.persistence.interfaces.ItemStoreInterface;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class ItemStore implements ItemStoreInterface {
 
     @Override
     public List<Item> findAll() {
-        List<Item> items = tx(session -> session.createQuery("from Item")
+        List<Item> items = tx(session -> session.createQuery("select distinct i from Item i join i.sets")
                 .list());
         items.forEach(item ->
                 item.setAccount(findAccount(item.getAccount()).get()));

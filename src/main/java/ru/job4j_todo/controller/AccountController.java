@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-@ThreadSafe
 @Controller
+@ThreadSafe
 public class AccountController {
 
     private final AccountServiceService accountService;

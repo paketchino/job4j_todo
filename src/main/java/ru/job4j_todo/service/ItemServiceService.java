@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;
 import ru.job4j_todo.persistence.ItemStore;
+import ru.job4j_todo.service.interfaces.ItemServiceInterface;
 
 import java.util.List;
 import java.util.Optional;

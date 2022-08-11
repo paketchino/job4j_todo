@@ -4,11 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table (name = "items")
@@ -31,17 +28,30 @@ public class Item implements Serializable {
 
     private boolean done;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> sets = new HashSet<>();
+
     public Item() {
     }
-    public static Item of(int id, String name, String description, LocalDateTime created, boolean done, Account account) {
+
+    public static Item of(int id, String name, String description,
+                          LocalDateTime created, boolean done, Set<Category> sets) {
         Item item = new Item();
         item.id = id;
         item.name = name;
         item.description = description;
         item.created = created;
         item.done = done;
-        item.account = account;
+        item.sets = sets;
         return item;
+    }
+
+    public Set<Category> getSets() {
+        return sets;
+    }
+
+    public void setSets(Set<Category> sets) {
+        this.sets = sets;
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package ru.job4j_todo.service;
+package ru.job4j_todo.service.interfaces;
 
 import ru.job4j_todo.model.Account;
 import ru.job4j_todo.model.Item;

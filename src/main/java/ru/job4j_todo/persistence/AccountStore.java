@@ -6,12 +6,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.job4j_todo.model.Account;
+import ru.job4j_todo.persistence.interfaces.AccountStoreInterface;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@ThreadSafe
 @Repository
+@ThreadSafe
 public class AccountStore implements AccountStoreInterface {
 
     private final SessionFactory sessionFactory;

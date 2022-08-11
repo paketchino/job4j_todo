@@ -4,12 +4,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j_todo.model.Account;
+import ru.job4j_todo.model.Category;
 import ru.job4j_todo.model.Item;
-import ru.job4j_todo.persistence.ItemStore;
 import ru.job4j_todo.service.AccountServiceService;
+import ru.job4j_todo.service.CategoryService;
 import ru.job4j_todo.service.ItemServiceService;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ItemController {
@@ -17,9 +21,12 @@ public class ItemController {
     private final ItemServiceService itemService;
     private final AccountServiceService accountService;
 
-    public ItemController(ItemServiceService itemService, AccountServiceService accountService) {
+    private final CategoryService categoryService;
+
+    public ItemController(ItemServiceService itemService, AccountServiceService accountService, CategoryService categoryService) {
         this.itemService = itemService;
         this.accountService = accountService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/allItems")
@@ -32,13 +39,18 @@ public class ItemController {
     @GetMapping("/addItem")
     public String addItem(HttpSession session, Model model) {
         FindUser.findUser(session, model);
+        model.addAttribute("categories", categoryService.findAll());
         return "addItem";
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Item item, HttpSession session, Model model) {
+    public String createItem(@ModelAttribute Item item,
+                             HttpSession session, Model model) {
         FindUser.findUser(session, model);
         item.setAccount((Account) session.getAttribute("account"));
+        Set<Category> categories = new HashSet<>();
+        categories.addAll(categoryService.findAll());
+        item.setSets(categories);
         itemService.add(item);
         return "redirect:/allItems";
     }
