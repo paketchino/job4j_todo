@@ -13,6 +13,7 @@ import ru.job4j_todo.service.ItemServiceService;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -45,11 +46,13 @@ public class ItemController {
 
     @PostMapping("/createItem")
     public String createItem(@ModelAttribute Item item,
-                             HttpSession session, Model model) {
-        FindUser.findUser(session, model);
+                             HttpSession session,
+                             @RequestParam (name = "categoryId") int categoryId) {
         item.setAccount((Account) session.getAttribute("account"));
         Set<Category> categories = new HashSet<>();
-        categories.addAll(categoryService.findAll());
+        for (Category category : categoryService.findCategory(categoryId)) {
+            categories.add(category);
+        }
         item.setSets(categories);
         itemService.add(item);
         return "redirect:/allItems";

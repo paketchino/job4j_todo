@@ -26,7 +26,7 @@ public class CategoryService implements CategoryServerInterface {
     }
 
     @Override
-    public Optional<Category> findCategory(int id) {
+    public List<Category> findCategory(int id) {
         return categoryStore.findCategory(id);
     }
 

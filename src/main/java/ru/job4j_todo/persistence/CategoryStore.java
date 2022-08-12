@@ -34,11 +34,11 @@ public class CategoryStore implements CategoryInterface {
     }
 
     @Override
-    public Optional<Category> findCategory(int id) {
+    public List<Category> findCategory(int id) {
         return tx(
                 session ->
                         session.createQuery("from Category c where c.id = :cId")
-                                .setParameter("cId", id).uniqueResultOptional()
+                                .setParameter("cId", id).list()
         );
     }
 

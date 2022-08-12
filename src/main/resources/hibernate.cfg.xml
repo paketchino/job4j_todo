@@ -12,7 +12,9 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+
         <property name="hibernate.hbm2ddl.auto">update</property>
+
         <property name="hibernate.jdbc.time_zone">Europe/Moscow</property>
 
         <property name="show_sql">true</property>
@@ -23,7 +25,5 @@
         <mapping class="ru.job4j_todo.model.Item"/>
         <mapping class="ru.job4j_todo.model.Category"/>
 
-        <mapping class="ru.job4j_todo.tomany.Role"/>
-        <mapping class="ru.job4j_todo.tomany.User"/>
     </session-factory>
 </hibernate-configuration>

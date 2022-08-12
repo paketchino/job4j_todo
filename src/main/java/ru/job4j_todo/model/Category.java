@@ -3,7 +3,7 @@ package ru.job4j_todo.model;
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
-@Table(name = "i_categories")
+@Table(name = "categories")
 public class Category {
 
     @Id

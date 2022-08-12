@@ -19,14 +19,15 @@ public class Item implements Serializable {
 
     private String description;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime created = LocalDateTime.now();
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id")
-    private Account account;
 
     private boolean done;
+
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Category> sets = new HashSet<>();
@@ -34,13 +35,12 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public static Item of(int id, String name, String description,
-                          LocalDateTime created, boolean done, Set<Category> sets) {
+    public static Item of(int id, String name, String description, boolean done, Set<Category> sets) {
         Item item = new Item();
         item.id = id;
         item.name = name;
         item.description = description;
-        item.created = created;
+        item.created = new Date(System.currentTimeMillis());
         item.done = done;
         item.sets = sets;
         return item;
@@ -78,11 +78,11 @@ public class Item implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 

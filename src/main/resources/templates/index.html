@@ -71,7 +71,7 @@
                        th:text="${item.name}">
                     </a>
                 </td>
-                <td th:text="${#temporals.format(item.created, 'dd MMMM yyyy')}"></td>
+                <td th:text="${item.created}"></td>
                 <td>
                      <span th:if="${!item.isDone}">
                         <span class="badge badge-warning">В процессе</span>
@@ -80,6 +80,7 @@
                         <span class="badge badge-success">Выполнено</span>
                     </span>
                 </td>
+                <td th:text="${item.account.name}"> </td>
             </tr>
             </tbody>
         </table>

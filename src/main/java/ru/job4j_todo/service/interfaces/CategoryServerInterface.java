@@ -10,7 +10,7 @@ public interface CategoryServerInterface {
 
     Optional<Category> add(Category category);
 
-    Optional<Category> findCategory(int id);
+    List<Category> findCategory(int id);
 
     List<Category> findAll();
 }
