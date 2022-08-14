@@ -14,9 +14,11 @@ import java.util.Optional;
 public class CategoryService implements CategoryServerInterface {
 
     private final CategoryStore categoryStore;
+    private final ItemServiceService itemServiceService;
 
-    public CategoryService(CategoryStore categoryStore) {
+    public CategoryService(CategoryStore categoryStore, ItemServiceService itemServiceService) {
         this.categoryStore = categoryStore;
+        this.itemServiceService = itemServiceService;
     }
 
 
@@ -32,6 +34,8 @@ public class CategoryService implements CategoryServerInterface {
 
     @Override
     public List<Category> findAll() {
+        itemServiceService.findAll().forEach(item ->
+                item.getSets().forEach(category -> categoryStore.findCategory(category.getId())));
         return categoryStore.findAll();
     }
 }

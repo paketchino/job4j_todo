@@ -11,10 +11,8 @@ import ru.job4j_todo.service.CategoryService;
 import ru.job4j_todo.service.ItemServiceService;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class ItemController {
@@ -34,6 +32,8 @@ public class ItemController {
     public String items(HttpSession session, Model model) {
         FindUser.findUser(session, model);
         model.addAttribute("items", itemService.findAll());
+        model.addAttribute("item.sets", itemService.findAll().stream().flatMap(item ->
+                item.getSets().stream().map(category -> categoryService.findCategory(category.getId()))));
         return "allItems";
     }
 
@@ -50,8 +50,9 @@ public class ItemController {
                              @RequestParam (name = "categoryId") int categoryId) {
         item.setAccount((Account) session.getAttribute("account"));
         Set<Category> categories = new HashSet<>();
-        for (Category category : categoryService.findCategory(categoryId)) {
-            categories.add(category);
+        item.setCreated(new Date(System.currentTimeMillis()));
+        for (Category c : categoryService.findCategory(categoryId)) {
+            categories.add(c);
         }
         item.setSets(categories);
         itemService.add(item);

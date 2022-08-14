@@ -82,8 +82,9 @@
                     </span>
                 </td>
                 <td th:text="${item.account.name}"> </td>
-                <td th:text="${item.sets}"> </td>
-                </tr>
+                <td th:each="category: ${item.sets}">
+                    <tr th:text="${category.name}"></tr>
+                </td>
             </tr>
             </tbody>
         </table>
