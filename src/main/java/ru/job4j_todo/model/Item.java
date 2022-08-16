@@ -1,12 +1,14 @@
 package ru.job4j_todo.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.*;
 
+@Setter
+@Getter
 @Entity
 @Table (name = "items")
 public class Item implements Serializable {
@@ -22,84 +24,27 @@ public class Item implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-
     private boolean done;
 
-    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne (fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Category> sets = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     public Item() {
     }
 
-    public static Item of(int id, String name, String description, boolean done, Set<Category> sets) {
+    public static Item of(int id, String name, String description, boolean done, Set<Category> categories) {
         Item item = new Item();
         item.id = id;
         item.name = name;
         item.description = description;
         item.created = new Date(System.currentTimeMillis());
         item.done = done;
-        item.sets = sets;
+        item.categories = categories;
         return item;
-    }
-
-    public Set<Category> getSets() {
-        return sets;
-    }
-
-    public void setSets(Set<Category> sets) {
-        this.sets = sets;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     @Override

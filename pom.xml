@@ -37,7 +37,7 @@
 		<profile>
 			<id>production</id>
 			<properties>
-				<db.url>jdbc:postgresql://127.0.0.1:5432/item</db.url>
+				<db.url>jdbc:postgresql://127.0.0.1:5432/database</db.url>
 				<db.username>postgres</db.username>
 				<db.password>12345</db.password>
 				<db.driver>org.postgresql.Driver</db.driver>
@@ -46,6 +46,11 @@
 	</profiles>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>

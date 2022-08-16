@@ -74,6 +74,10 @@
                         <span class="badge badge-success">Выполнено</span>
                     </span>
                 </td>
+                <td th:text="${item.account.name}"> </td>
+                <td th:each="categ: ${item.categories}">
+                    <p th:text="${categ.name}"/>
+                </td>
             </tr>
             </tbody>
         </table>

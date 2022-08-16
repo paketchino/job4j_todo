@@ -25,20 +25,19 @@ public class ItemStore implements ItemStoreInterface {
 
     @Override
     public Optional<Account> findAccount(Account account) {
-        return tx(session -> session.createQuery("select distinct i from Item i join fetch i.sets where i.account.name = :iName")
+        return tx(session -> session.createQuery("select distinct i from Item i join fetch i.categories where i.account.name = :iName")
                 .setParameter("iName", account.getName())).uniqueResultOptional();
     }
 
     @Override
     public List<Item> findAll() {
-        List<Item> items = tx(session -> session.createQuery(" from Item i join fetch i.sets")
+        return tx(session -> session.createQuery("select i from Item i join fetch i.categories")
                 .list());
-        return items;
     }
 
     @Override
     public List<Item> findAllByCondition(boolean condition) {
-        return tx(session -> session.createQuery("select distinct i from Item i join fetch i.sets where i.done = :fCondition")
+        return tx(session -> session.createQuery("select distinct i from Item i join fetch i.categories where i.done = :fCondition")
                 .setParameter("fCondition", condition).list());
     }
 
@@ -57,9 +56,9 @@ public class ItemStore implements ItemStoreInterface {
 
     @Override
     public Optional<Item> findById(int id) {
-       return tx(session ->
-            session.createQuery("from Item i where i.id = :fId").setParameter("fId", id)
-                    .uniqueResultOptional());
+        return tx(session ->
+                session.createQuery("from Item i where i.id = :fId").setParameter("fId", id)
+                        .uniqueResultOptional());
     }
 
     @Override

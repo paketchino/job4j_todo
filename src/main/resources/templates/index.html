@@ -30,6 +30,7 @@
                 <a class="nav-item nav-link" th:href="@{/allItems}">Все заявки</a>
                 <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
+                <a class="nav-item nav-link" th:href="@{/categories}">Все категории</a>
                     <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
                         <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
                         <span th:text="${account.name}"> Войти</span>
@@ -81,6 +82,9 @@
                     </span>
                 </td>
                 <td th:text="${item.account.name}"> </td>
+                <td th:each="categ: ${item.categories}">
+                    <p th:text="${categ.name}"/>
+                </td>
             </tr>
             </tbody>
         </table>

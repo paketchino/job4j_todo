@@ -32,8 +32,6 @@ public class ItemController {
     public String items(HttpSession session, Model model) {
         FindUser.findUser(session, model);
         model.addAttribute("items", itemService.findAll());
-        model.addAttribute("item.sets", itemService.findAll().stream().flatMap(item ->
-                item.getSets().stream().map(category -> categoryService.findCategory(category.getId()))));
         return "allItems";
     }
 
@@ -54,7 +52,7 @@ public class ItemController {
         for (Category c : categoryService.findCategory(categoryId)) {
             categories.add(c);
         }
-        item.setSets(categories);
+        item.setCategories(categories);
         itemService.add(item);
         return "redirect:/allItems";
     }

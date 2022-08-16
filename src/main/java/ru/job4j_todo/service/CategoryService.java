@@ -34,8 +34,6 @@ public class CategoryService implements CategoryServerInterface {
 
     @Override
     public List<Category> findAll() {
-        itemServiceService.findAll().forEach(item ->
-                item.getSets().forEach(category -> categoryStore.findCategory(category.getId())));
         return categoryStore.findAll();
     }
 }

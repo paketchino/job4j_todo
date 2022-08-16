@@ -24,6 +24,7 @@
         <a class="navbar-brand" th:href="@{/allItems}">Количество заявок</a>
         <a class="nav-item nav-link" th:href="@{/undoneItems}">Новый</a>
         <a class="nav-item nav-link" th:href="@{/doneItems}">Выполненные</a>
+        <a class="nav-item nav-link" th:href="@{/categories}">Все категории</a>
         <a class="nav-item nav-link" th:if="${account.name == 'Гость'}" th:href="@{/loginPage}">
             <a class="nav-item nav-link active" th:href="@{/addAccount}">Регистрация <span class="sr-only">(current)</span></a>
             <span th:text="${account.name}"> Войти</span>
