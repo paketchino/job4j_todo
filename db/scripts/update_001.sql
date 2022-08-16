@@ -1,10 +1,3 @@
-drop table accounts cascade ;
-
-drop table items cascade ;
-
-drop table categories cascade ;
-
-drop table  items_categories cascade ;
 
 create table if not exists accounts(
     id SERIAL PRIMARY KEY,
