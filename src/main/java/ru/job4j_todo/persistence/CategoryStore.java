@@ -20,6 +20,13 @@ public class CategoryStore implements CategoryInterface {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Добавляет категорию в БД
+     * @param category - категория для добавления
+     * "Важное", "Семейное"
+     * @return - контейнер optional в котором хранится
+     *  обьект категории
+     */
     @Override
     public Optional<Category> add(Category category) {
         Optional<Category> rsl = Optional.empty();
@@ -33,6 +40,11 @@ public class CategoryStore implements CategoryInterface {
         return rsl;
     }
 
+    /**
+     * Выполняет поиск категории по id
+     * @param id - id для поиска
+     * @return категорию в виде списка
+     */
     @Override
     public List<Category> findCategory(int id) {
         return tx(
@@ -42,6 +54,10 @@ public class CategoryStore implements CategoryInterface {
         );
     }
 
+    /**
+     * Возвращает список созданных категория
+     * @return список категорий
+     */
     @Override
     public List<Category> findAll() {
         return tx(session ->

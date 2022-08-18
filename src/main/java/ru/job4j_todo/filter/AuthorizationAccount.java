@@ -10,6 +10,16 @@ import java.io.IOException;
 @Component
 public class AuthorizationAccount implements Filter {
 
+    /**
+     * Фильтр является связующим элементом для получения информации
+     * об аккаунтах пользователя
+     * @param servletRequest - принимает запрос от пользователся
+     * @param servletResponse - сервер отправяет ответ на запрос
+     * @param filterChain - обрабатывает входящую информацию
+     *                    от пользователя req/res(запрос/ответ)
+     * @throws IOException может вызвать IOException в связи с неправильным запросом
+     * @throws ServletException может вызвать ServletException
+     */
     @Override
     public void doFilter(
             ServletRequest servletRequest,

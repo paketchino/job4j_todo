@@ -23,24 +23,33 @@ public class ItemStore implements ItemStoreInterface {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public Optional<Account> findAccount(Account account) {
-        return tx(session -> session.createQuery("select distinct i from Item i join fetch i.categories where i.account.name = :iName")
-                .setParameter("iName", account.getName())).uniqueResultOptional();
-    }
 
+    /**
+     * Возвращает список всех созданных заявок
+     * @return - список всех заявок
+     */
     @Override
     public List<Item> findAll() {
         return tx(session -> session.createQuery("select i from Item i join fetch i.categories")
                 .list());
     }
 
+    /**
+     * Выполняет поиск по всем заявкам
+     * с переменной done
+     * @return список выполненных заявок
+     */
     @Override
     public List<Item> findAllByCondition(boolean condition) {
         return tx(session -> session.createQuery("select distinct i from Item i join fetch i.categories where i.done = :fCondition")
                 .setParameter("fCondition", condition).list());
     }
 
+    /**
+     * Выполняет добавление заявки в БД
+     * @param item - заявка на добавление
+     * @return возвращает item в контейнере optional
+     */
     @Override
     public Optional<Item> add(Item item) {
         Optional<Item> optionalItem = Optional.empty();
@@ -54,6 +63,11 @@ public class ItemStore implements ItemStoreInterface {
         return optionalItem;
     }
 
+    /**
+     * Выполняет поиск заявки item по item.id
+     * @param id - id заявки
+     * @return возвращает item в контейнере optional
+     */
     @Override
     public Optional<Item> findById(int id) {
         return tx(session ->
@@ -61,18 +75,34 @@ public class ItemStore implements ItemStoreInterface {
                         .uniqueResultOptional());
     }
 
+    /**
+     * Удаляет заявку по Id
+     * @param id - заявка для удаления
+     * @return true || false при успешном удаление
+     */
     @Override
     public boolean remove(int id) {
         return tx(session -> session.createQuery("delete from Item i where i.id = :fId")
                 .setParameter("fId", id).executeUpdate() > 0);
     }
 
+    /**
+     * Выполняет поиск акк по его account.id
+     * @param account - текущий акк
+     * @return account List<Account>
+     */
     @Override
     public List<Item> findAllByAccount(Account account) {
         return tx(session -> session.createQuery("from Item i where i.account.id = :fId")
                 .setParameter("fId", account.getId()).list());
     }
 
+    /**
+     * Обновляет данные заявки и автоматически сбрасывает,
+     * если заявка была выполнено done = true
+     * @param item - текущая заявка которую нужно обновить
+     * @return true || false при успешном обновление
+     */
     @Override
     public boolean update(Item item) {
         return tx(session -> session.createQuery("update Item i set i.name = :iName, i.description = :iDesc, i.done = :iFalse where i.id = :iId")
@@ -82,6 +112,11 @@ public class ItemStore implements ItemStoreInterface {
                 .setParameter("iId", item.getId()).executeUpdate() > 0);
     }
 
+    /**
+     * Меняет аттребут в заявки item.done на true
+     * @param item - текущая заявка
+     * @return true || false при успешной операции
+     */
     @Override
     public boolean updateCondition(Item item) {
         return tx(session -> session.createQuery("update Item i set i.done = :iDone where i.id = :iId")

@@ -7,9 +7,8 @@ import java.util.Optional;
 
 public interface AccountStoreInterface {
 
-    List<Account> findAll();
-
     Optional<Account> addAccount(Account account);
 
-    List<Account> findAccById(int id);
+    Optional<Account> findUserByLoginAndPwd(String login, String password);
+
 }

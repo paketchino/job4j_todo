@@ -9,9 +9,7 @@ public interface AccountServiceInterface {
 
     Optional<Account> addAccount(Account account);
 
-    Optional<Account> findUserByLoginAndPwd(String email, String password);
-
-    List<Account> findAccById(int id);
+    Optional<Account> findUserByLoginAndPwd(String login, String password);
 
 
 }

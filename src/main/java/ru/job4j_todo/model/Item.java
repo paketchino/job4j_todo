@@ -1,5 +1,7 @@
 package ru.job4j_todo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,19 +13,24 @@ import java.util.*;
 @Getter
 @Entity
 @Table (name = "items")
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Item implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JoinColumn(name = "item_name")
     private String name;
 
+    @JoinColumn(name = "item_desc")
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
+    @JoinColumn(name = "item_done")
     private boolean done;
 
     @ManyToOne (fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -34,37 +41,6 @@ public class Item implements Serializable {
     private Set<Category> categories = new HashSet<>();
 
     public Item() {
-    }
-
-    public static Item of(int id, String name, String description, boolean done, Set<Category> categories) {
-        Item item = new Item();
-        item.id = id;
-        item.name = name;
-        item.description = description;
-        item.created = new Date(System.currentTimeMillis());
-        item.done = done;
-        item.categories = categories;
-        return item;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Item item = (Item) o;
-        return id == item.id && done == item.done
-                && Objects.equals(description, item.description)
-                && Objects.equals(name, item.name)
-                && Objects.equals(created, item.created);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, created, done, account);
     }
 
     @Override

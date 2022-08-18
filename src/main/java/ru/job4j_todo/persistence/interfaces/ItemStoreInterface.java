@@ -10,7 +10,6 @@ public interface ItemStoreInterface {
 
     List<Item> findAll();
 
-    Optional<Account> findAccount(Account account);
 
     Optional<Item> add(Item item);
 

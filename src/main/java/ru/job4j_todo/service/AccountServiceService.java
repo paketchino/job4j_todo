@@ -5,8 +5,6 @@ import ru.job4j_todo.model.Account;
 import ru.job4j_todo.persistence.AccountStore;
 import net.jcip.annotations.ThreadSafe;
 import ru.job4j_todo.service.interfaces.AccountServiceInterface;
-
-import java.util.List;
 import java.util.Optional;
 
 @ThreadSafe
@@ -19,19 +17,29 @@ public class AccountServiceService implements AccountServiceInterface {
         this.accountStore = accountStore;
     }
 
+    /**
+     * Добавляет акк в БД
+     * @param account - аккаунт для добавления
+     * @return - возвращает обьект в виде контейнера optional
+     */
     @Override
     public Optional<Account> addAccount(Account account) {
         return accountStore.addAccount(account);
     }
 
+    /**
+     * Выполняет поиск по двум критериям
+     * @param login - эл.почта для входа
+     * @param password - пароль для входа
+     * @return возвращает контейнер optional
+     * с обьектом Account который прошел
+     * авторизацию
+     */
     @Override
-    public Optional<Account> findUserByLoginAndPwd(String email, String password) {
-        return accountStore.findLoginAndPassword(email, password);
+    public Optional<Account> findUserByLoginAndPwd(String login, String password) {
+        return accountStore.findUserByLoginAndPwd(login, password);
     }
 
-    @Override
-    public List<Account> findAccById(int id) {
-        return accountStore.findAccById(id);
-    }
+
 
 }

@@ -22,16 +22,32 @@ public class CategoryService implements CategoryServerInterface {
     }
 
 
+    /**
+     * Добавляет категорию в БД
+     * @param category - категория для добавления
+     * "Важное", "Семейное"
+     * @return - контейнер optional в котором хранится
+     *  обьект категории
+     */
     @Override
     public Optional<Category> add(Category category) {
         return categoryStore.add(category);
     }
 
+    /**
+     * Выполняет поиск категории по id
+     * @param id - id для поиска
+     * @return категорию в виде списка
+     */
     @Override
     public List<Category> findCategory(int id) {
         return categoryStore.findCategory(id);
     }
 
+    /**
+     * Возвращает список созданных категория
+     * @return список категорий
+     */
     @Override
     public List<Category> findAll() {
         return categoryStore.findAll();

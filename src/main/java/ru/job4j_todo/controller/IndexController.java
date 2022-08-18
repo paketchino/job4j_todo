@@ -20,6 +20,14 @@ public class IndexController {
         this.itemStore = itemStore;
     }
 
+    /**
+     * Главная страница со всем заявками
+     * @param model - обрабатывает полученные данные
+     * @param session - текущая сессия которая сохраняет данные
+     * и отправляет их на сервер
+     * @param account - аккаунт для авторизация или поиска
+     * @return ссылка на страницу index
+     */
     @GetMapping("/index")
     public String index(Model model, HttpSession session, @ModelAttribute Account account) {
         FindUser.findUser(session, model);

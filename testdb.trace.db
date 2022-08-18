@@ -1,0 +1,7 @@
+2022-08-07 00:38:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DATABASECHANGELOGLOCK" not found (this database is empty); SQL statement:
+SELECT COUNT(*) FROM DATABASECHANGELOGLOCK [42104-214]
+2022-08-16 19:06:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ACCOUNTS" не найдена
+Table "ACCOUNTS" not found; SQL statement:
+drop table accounts cascade  [42102-214]

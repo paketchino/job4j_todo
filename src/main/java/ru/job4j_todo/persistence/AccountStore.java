@@ -22,6 +22,11 @@ public class AccountStore implements AccountStoreInterface {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Добавляет акк в БД
+     * @param account - аккаунт для добавления
+     * @return - возвращает обьект в виде контейнера optional
+     */
     @Override
     public Optional<Account> addAccount(Account account) {
         Optional<Account> rsl = Optional.empty();
@@ -37,25 +42,23 @@ public class AccountStore implements AccountStoreInterface {
         return rsl;
     }
 
-    public Optional findLoginAndPassword(String login, String password) {
+    /**
+     * Выполняет поиск по двум критериям
+     * @param login - эл.почта для входа
+     * @param password - пароль для входа
+     * @return возвращает контейнер optional
+     * с обьектом Account который прошел
+     * авторизацию
+     */
+    @Override
+    public Optional<Account> findUserByLoginAndPwd(String login, String password) {
         return tx(session -> session.createQuery("from Account a where a.login = :aLogin and a.password =: aPassword")
                 .setParameter("aLogin", login)
                 .setParameter("aPassword", password)
                 .uniqueResultOptional());
     }
 
-    @Override
-    public List<Account> findAll() {
-        return tx(session -> session.createQuery("from Account ").list());
-    }
 
-    @Override
-    public List<Account> findAccById(int id) {
-        return tx(session ->
-                session.createQuery("from Account a where a.id = :aId")
-                        .setParameter("aId", id)
-                        .list());
-    }
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = sessionFactory.openSession();

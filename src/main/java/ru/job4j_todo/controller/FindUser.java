@@ -7,6 +7,14 @@ import javax.servlet.http.HttpSession;
 
 public class FindUser {
 
+    /**
+     * Выполняет поиск пользователя который зашел на сайт
+     * если у пользователя отсутствует аккаунт, то он заходит как
+     * гость и для дальнейшей посещения сайта необходима авторизация
+     * @param session - текущая сессия которая сохраняет данные
+     * и отправляет их на сервер
+     * @param model - обрабатывает полученные данные
+     */
     public static void findUser(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
         if (account == null) {
